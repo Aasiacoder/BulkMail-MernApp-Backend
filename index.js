@@ -27,7 +27,7 @@ mongoose.connect(process.env.MONGO_URI).then(function () {
 //create model for to get a data from bulkmail collection {}-schema is not use here coz i didn't add any values here so i didn't give 
 const credential = mongoose.model("credentialmodel", {}, 'bulkmail')
 
-app.post("/sendemail", (req, res) => { //when /sendemail req is send then the mail is res
+app.post("/api/sendemail", (req, res) => { //when /sendemail req is send then the mail is res
 
     let msg = req.body.msg
     let emailList = req.body.emailList
