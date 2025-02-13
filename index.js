@@ -2,10 +2,14 @@ import express from 'express';//"type":"module" code write in package.json
 import cors from 'cors';
 import nodemailer from 'nodemailer';//1 Install Nodemailer
 import mongoose from 'mongoose'
+// config .env file -> npm install dotenv
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 //MiddleWare functions
 app.use(express.json());
@@ -14,7 +18,7 @@ app.use(cors());
 // (mongodb version/database name)
 // mongodb://127.0.0.1:27017/passkey (this mongodb connaction link for mongodb local it only work from my laptop only not others laptop. so i change to mongodb Atlas cloud it will give mongodb connection link and it will work to all of thems laptop or system)
 // connect mongoose                   username:password                                        databaseName  
-mongoose.connect("mongodb+srv://aasiabulkmail:aasiaBulkmailPasskey@cluster0.1sfxc.mongodb.net/passkey?retryWrites=true&w=majority&appName=Cluster0").then(function () {
+mongoose.connect(process.env.MONGO_URI).then(function () {
     console.log("Connected to Database");
 }).catch(function () {
     console.log("Failed to connect");
@@ -51,7 +55,7 @@ app.post("/sendemail", (req, res) => { //when /sendemail req is send then the ma
                 {
                     await transporter.sendMail(
                         {
-                            from: "aasia3017@gmail.com",
+                            from: process.env.EMAIL,
                             to: emailList[i], // 3 who's you want to send mail give there mail id here
                             subject: "A message from BulkMail App",
                             text: msg,// what msg you want to write type here
